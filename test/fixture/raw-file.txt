@@ -1,1 +1,0 @@
-Test file for https://github.com/AutoModality/action-cloudsmith/actions

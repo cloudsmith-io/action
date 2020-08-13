@@ -1,0 +1,20 @@
+name: Push Alpine
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Alpine Push Demo
+    steps:
+      - uses: actions/checkout@v1
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "alpine"
+          owner: "cloudsmith"
+          repo: "actions"
+          distro: "alpine/v3.9"
+          republish: "true" # needed since version is not changing
+          file: "test/fixture/cloudsmith-alpine-example-1.0.0-r0.apk" #real file that will repeat versions

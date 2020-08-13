@@ -5,20 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     name: Raw File Push Test
     steps:
-    - uses: actions/checkout@v1
-    - name: Push
-      id: push
-      uses: cloudsmith-io/action@0.3.0
-      with:
-        api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
-        command: 'push'
-        format: 'raw'
-        owner: 'automodality'
-        repo: 'trial'
-        file: 'test/fixture/raw-file.txt' 
-        name: 'Raw Test'
-        summary: 'Github Action test of raw pushes'
-        description: 'See https://github.com/AutoModality/action-cloudsmith/actions'
-        version: ${{ github.sha}}
-
-
+      - uses: actions/checkout@v1
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "raw"
+          owner: "cloudsmith"
+          repo: "actions"
+          file: "test/fixture/raw_file.txt"
+          name: "Raw Test"
+          summary: "Github Action test of raw pushes"
+          description: "See https://github.com/AutoModality/action-cloudsmith/actions"
+          version: ${{ github.sha}}
