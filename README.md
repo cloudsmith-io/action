@@ -87,6 +87,30 @@ jobs:
           file: "test/fixture/cloudsmith-dart-example-1.0.0.tar.gz"
 ```
 
+### Python Push
+
+```yaml
+name: Push Python
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Python Push Demo
+    steps:
+      - uses: actions/checkout@v1
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "python"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true"
+          file: "test/fixture/cloudsmith-python-example-1.0.0.tar.gz"
+```
+
 ### Raw File Push
 
 ```yaml
