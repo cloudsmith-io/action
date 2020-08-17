@@ -52,8 +52,8 @@ fi
 
 
 
-case "$format" in 
-  "alpine"|"deb"|"raw"|"docker")
+case "$format" in
+  "alpine"|"dart"|"deb"|"docker"|"raw")
     
     if [[ -n "$distro" && "$distro" != $DEFAULT ]]; then
         distro_path="/$distro"
@@ -81,8 +81,7 @@ case "$format" in
     fi
   ;;
   *)
-    echo "format $format not yet implemented."
-    exit 2
+    echo "format $format not yet officially supported within action."
   ;;
 esac
 

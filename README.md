@@ -63,6 +63,30 @@ jobs:
           file: "test/fixture/cloudsmith-alpine-example-1.0.0-r0.apk"
 ```
 
+### Dart Push
+
+```yaml
+name: Push Dart
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Dart Push Demo
+    steps:
+      - uses: actions/checkout@v1
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "dart"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true"
+          file: "test/fixture/cloudsmith-dart-example-1.0.0.tar.gz"
+```
+
 ### Raw File Push
 
 ```yaml
