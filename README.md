@@ -2,8 +2,7 @@
 
 # Cloudsmith Github Action
 
-Interact with Cloudsmith repositories using the cloudmsith cli
-to push packages, etc.
+Interact with Cloudsmith repositories using the [cloudmsith cli](https://pypi.org/project/cloudsmith-cli/) to push packages, etc.
 
 ## Cloudsmith CLI
 
@@ -14,13 +13,15 @@ to its structure and terminology as possible.
 
 - Push
   - [Alpine format](https://cloudsmith.com/alpine-repository/)
+  - [Dart format](https://cloudsmith.com/dart-repository/)
   - [Debian format](https://cloudsmith.com/debian-repository/)
   - [Docker format](https://cloudsmith.com/docker-registry/)
+  - [Python format](https://cloudsmith.com/python-repository/)
   - [Raw format](https://cloudsmith.com/raw-repository/)
 
 **Not Implemented**
 
-- Everything else
+- Other package formats may work but official support has not yet been added to the Action. Please feel free to contribute pull requests to include supported Cloudsmith package formats.
 
 ## Cloudsmith API Key
 
@@ -38,7 +39,7 @@ The following examples use static files located within `test/fixtures`. When rep
 
 To pin to a specific release of this Github Action, replace `use: cloudsmith-io/action@master` with the version you require e.g. `uses: cloudsmith-io/action@0.3.0`.
 
-### Alpine Push
+### Alpine Package Push
 
 ```yaml
 name: Push Alpine
@@ -63,7 +64,7 @@ jobs:
           file: "test/fixture/cloudsmith-alpine-example-1.0.0-r0.apk"
 ```
 
-### Dart Push
+### Dart Package Push
 
 ```yaml
 name: Push Dart
@@ -85,57 +86,6 @@ jobs:
           repo: "actions"
           republish: "true"
           file: "test/fixture/cloudsmith-dart-example-1.0.0.tar.gz"
-```
-
-### Python Push
-
-```yaml
-name: Push Python
-on: push
-jobs:
-  push:
-    runs-on: ubuntu-latest
-    name: Python Push Demo
-    steps:
-      - uses: actions/checkout@v1
-      - name: Push
-        id: push
-        uses: cloudsmith-io/action@master
-        with:
-          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
-          command: "push"
-          format: "python"
-          owner: "cloudsmith"
-          repo: "actions"
-          republish: "true"
-          file: "test/fixture/cloudsmith-python-example-1.0.0.tar.gz"
-```
-
-### Raw File Push
-
-```yaml
-name: Push Raw
-on: push
-jobs:
-  push:
-    runs-on: ubuntu-latest
-    name: Raw File Push Test
-    steps:
-      - uses: actions/checkout@v1
-      - name: Push
-        id: push
-        uses: cloudsmith-io/action@master
-        with:
-          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
-          command: "push"
-          format: "raw"
-          owner: "cloudsmith"
-          repo: "actions"
-          file: "test/fixture/raw_file.txt"
-          name: "Raw Test"
-          summary: "Github Action test of raw pushes"
-          description: "See https://github.com/AutoModality/action-cloudsmith/actions"
-          version: ${{ github.sha}}
 ```
 
 ### Debian Package Push
@@ -191,3 +141,62 @@ jobs:
           republish: "true"
           file: "test/fixture/alpine-docker-test.tar.gz"
 ```
+
+### Python Package Push
+
+```yaml
+name: Push Python
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Python Push Demo
+    steps:
+      - uses: actions/checkout@v1
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "python"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true"
+          file: "test/fixture/cloudsmith-python-example-1.0.0.tar.gz"
+```
+
+### Raw File Push
+
+```yaml
+name: Push Raw
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Raw File Push Test
+    steps:
+      - uses: actions/checkout@v1
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "raw"
+          owner: "cloudsmith"
+          repo: "actions"
+          file: "test/fixture/raw_file.txt"
+          name: "Raw Test"
+          summary: "Github Action test of raw pushes"
+          description: "See https://github.com/cloudsmith-io/action"
+          version: ${{ github.sha}}
+```
+
+## Contributing
+
+Yes! Please do contribute, this is why we love open source. Please see `CONTRIBUTING.md` for contribution guidelines when making code changes or raising issues for bug reports, ideas, discussions and/or questions (i.e. help required).
+
+## EOF
+
+This quality product was brought to you by [Cloudsmith](https://cloudsmith.io) and the [fine folks who have contributed](https://github.com/cloudsmith-io/action/blob/master/.github/CONTRIBUTORS.md).

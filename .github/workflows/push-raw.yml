@@ -18,5 +18,5 @@ jobs:
           file: "test/fixture/raw_file.txt"
           name: "Raw Test"
           summary: "Github Action test of raw pushes"
-          description: "See https://github.com/AutoModality/action-cloudsmith/actions"
+          description: "See https://github.com/cloudsmith-io/action"
           version: ${{ github.sha}}
