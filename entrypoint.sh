@@ -171,7 +171,12 @@ function execute_push {
     export CLOUDSMITH_API_KEY="${options["api_key"]}"
   }
 
-  local request="cloudsmith push ${options["action"]} ${options["format"]} $context ${options["file"]} $params ${options["extra"]}"
+  local extra=""
+  check_option_set "${options["extra"]}" && {
+    extra="${options["extra"]}"
+  }
+
+  local request="cloudsmith push ${options["action"]} ${options["format"]} $context ${options["file"]} $params $extra"
   echo $request
   eval $request
 }
