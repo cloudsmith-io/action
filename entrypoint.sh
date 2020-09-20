@@ -23,7 +23,6 @@ function die {
 
 
 function setup_options {
-  echo "SETUP OPTIONS"
   options["api_version"]=$DEFAULT
   options["cli_version"]=$DEFAULT
   options["api_key"]=$DEFAULT
@@ -41,8 +40,11 @@ function setup_options {
   options["summary"]=$DEFAULT
   options["description"]=$DEFAULT
   options["version"]=$DEFAULT
+  options["extra"]=$DEFAULT
 
+  local raw_opts="$@"
   local OPTIND OPT
+
   while getopts ":a:c:C:k:K:f:o:r:F:P:w:W:d:R:n:s:S:V:" OPT; do
     case $OPT in
       a) options["api_version"]="$OPTARG" ;;
@@ -64,17 +66,26 @@ function setup_options {
       S) options["description"]="$OPTARG" ;;
       V) options["version"]="$OPTARG" ;;
       :) die "Option -$OPTARG requires an argument." ;;
-      ?) die "Invalid option -$OPTARG." ;;
+      ?)
+        if [[ "$OPTARG" == *"-"* ]]; then
+          break
+        else
+          die "Invalid option -$OPTARG."
+        fi
+      ;;
     esac
   done
   shift "$((OPTIND-1))"
-  options["extra"]="$@"
+
+  if [[ "$raw_opts" == *" -- "* ]]; then
+    options["extra"]="${raw_opts##* -- }"
+  fi
 }
 
 
 function check_option_set {
   # Check if a value is set and non-default
-  local value=$@
+  local value="$@"
   test -n "$value" && test "$value" != "$DEFAULT"
   return $?
 }
@@ -82,7 +93,7 @@ function check_option_set {
 
 function check_option_true {
   # Check if a value is set and is true
-  local value=$@
+  local value="$@"
   test "$value" == "true"
   return $?
 }
@@ -183,7 +194,7 @@ function execute_push {
 
 
 function main {
-  setup_options $@
+  setup_options "$@"
   install_api_cli
 
   case "${options["command"]}" in
@@ -200,5 +211,5 @@ function main {
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
 then
-  main $@
+  main "$@"
 fi

@@ -61,7 +61,8 @@ jobs:
           format: "alpine"
           owner: "cloudsmith"
           repo: "actions"
-          distro: "alpine/v3.9"
+          distro: "alpine"
+          release: "v3.9"
           republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-alpine-example-1.0.0-r0.apk"
 ```

@@ -85,23 +85,23 @@ inputs:
 runs:
   using: "docker"
   image: "Dockerfile"
-  args: # these map in order with entrypoint.sh
-    - -a ${{ inputs.api-version }}
-    - -c ${{ inputs.cli-version }}
-    - -C ${{ inputs.skip-install-cli }}
-    - -k ${{ inputs.api-key }}
-    - -K ${{ inputs.command }}
-    - -f ${{ inputs.format }}
-    - -o ${{ inputs.owner }}
-    - -r ${{ inputs.repo }}
-    - -F ${{ inputs.file }}
-    - -P ${{ inputs.republish }}
-    - -w ${{ inputs.wait-interval }}
-    - -W ${{ inputs.no-wait-for-sync }}
-    - -d ${{ inputs.distro }}
-    - -R ${{ inputs.release }}
-    - -n ${{ inputs.name }}
-    - -s ${{ inputs.summary }}
-    - -S ${{ inputs.description }}
-    - -V ${{ inputs.version }}
-    - -- ${{ inputs.extra }}
+  args:
+    - -a${{ inputs.api-version }}
+    - -c${{ inputs.cli-version }}
+    - -C${{ inputs.skip-install-cli }}
+    - -k${{ inputs.api-key }}
+    - -K${{ inputs.command }}
+    - -f${{ inputs.format }}
+    - -o${{ inputs.owner }}
+    - -r${{ inputs.repo }}
+    - -F${{ inputs.file }}
+    - -P${{ inputs.republish }}
+    - -w${{ inputs.wait-interval }}
+    - -W${{ inputs.no-wait-for-sync }}
+    - -d${{ inputs.distro }}
+    - -R${{ inputs.release }}
+    - -n${{ inputs.name }}
+    - -s${{ inputs.summary }}
+    - -S${{ inputs.description }}
+    - -V${{ inputs.version }}
+    - " -- ${{ inputs.extra }}"

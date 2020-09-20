@@ -116,8 +116,8 @@ function setup_mocks {
 
 @test ".cli is skipped if specified" {
     setup_mocks
-    run $profile_script -f raw -o my-org -r my-repo -F package.raw -C
-    assert_failure
+    run $profile_script -f raw -o my-org -r my-repo -F package.raw -C true
+    assert_success
     refute_output -p "EXECUTE pip install cloudsmith-cli"
 }
 
@@ -165,9 +165,9 @@ function setup_mocks {
 
 @test ".execute successful raw push" {
     setup_mocks
-    run $profile_script -f raw -o my-org -r my-repo -F package.zip -n my-name -s my-summary -S my-desc -V 1.0
+    run $profile_script -f raw -o my-org -r my-repo -F package.zip -n my-name -s "Some Summary" -S "Some Description" -V 1.0
     assert_success
-    assert_output -p "EXECUTE cloudsmith push raw my-org/my-repo package.zip --name=my-name --summary=my-summary --description=my-desc --version=1.0"
+    assert_output -p "EXECUTE cloudsmith push raw my-org/my-repo package.zip --name=my-name --summary=Some Summary --description=Some Description --version=1.0"
 }
 
 @test ".execute successful other push, but reports unsupported" {
@@ -181,7 +181,15 @@ function setup_mocks {
 @test ".execute successful push, with optional universal args" {
     setup_mocks
     run $profile_script -f deb -o my-org -r my-repo -F package.deb -d ubuntu \
-        -R xenial -P true -w 10.0 -W true -- --verbatim-argument
+        -R xenial -P true -w 10.0 -W true -- --verbatim-this 1 --verbatim-that 2
     assert_success
-    assert_output -p "EXECUTE cloudsmith push deb my-org/my-repo/ubuntu/xenial package.deb --republish --wait-interval=10.0 --no-wait-for-sync --verbatim-argument"
+    assert_output -p "EXECUTE cloudsmith push deb my-org/my-repo/ubuntu/xenial package.deb --republish --wait-interval=10.0 --no-wait-for-sync --verbatim-this 1 --verbatim-that 2"
+}
+
+@test ".execute successful push, with optional universal args, none ignored" {
+    setup_mocks
+    run $profile_script -f deb -o my-org -r my-repo -F package.deb -d ubuntu \
+        -R xenial -P none -w none -W none -- none
+    assert_success
+    assert_output -p "EXECUTE cloudsmith push deb my-org/my-repo/ubuntu/xenial package.deb"
 }

@@ -1,6 +1,12 @@
 name: Push Docker
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   push:
