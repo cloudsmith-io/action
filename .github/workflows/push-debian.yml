@@ -17,5 +17,5 @@ jobs:
           repo: "actions"
           distro: "ubuntu"
           release: "xenial"
-          republish: "true" # needed since version is not changing
+          republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-debian-example-1.0.0-amd64.deb" #real file that will repeat versions

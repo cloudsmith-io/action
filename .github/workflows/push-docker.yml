@@ -15,6 +15,5 @@ jobs:
           format: "docker"
           owner: "cloudsmith"
           repo: "actions"
-          republish: "true" # needed since version is not changing
+          republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-docker-example-1.0.0.tar.gz" #alpine image saved to file
-

@@ -15,5 +15,5 @@ jobs:
           format: "dart"
           owner: "cloudsmith"
           repo: "actions"
-          republish: "true" # needed since version is not changing
+          republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-dart-example-1.0.0.tar.gz" #real file that will repeat versions

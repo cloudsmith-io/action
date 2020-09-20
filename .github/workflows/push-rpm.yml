@@ -1,9 +1,9 @@
-name: Push RPM
+name: Push RedHat/RPM
 on: push
 jobs:
   push:
     runs-on: ubuntu-latest
-    name: RPM Push Demo
+    name: RedHat/RPM Push Demo
     steps:
       - uses: actions/checkout@v1
       - name: Push
@@ -17,5 +17,5 @@ jobs:
           repo: "actions"
           distro: "any-distro"
           release: "any-version"
-          republish: "true" # needed since version is not changing
+          republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-rpm-example-1.0-1.x86_64.rpm" #real file that will repeat versions

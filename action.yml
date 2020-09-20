@@ -1,71 +1,103 @@
 # action.yml
-name: 'Cloudsmith'
-description: 'Interact with Cloudsmith repositories'
+name: "Cloudsmith"
+description: "Interact with Cloudsmith repositories"
 inputs:
-  api-key:  
-    description: 'The Cloudsmith API Key in the Github Secrets repository settings.'
-    required: true
-    default: none
-  command:  
-    description: 'The desired action with cloudsmith (push, list, etc)'
-    required: true
-    default: help
-  format:  
-    description: 'The package format (deb,npm,maven, etc)'
-    required: true
-    default: none
-  owner:  
-    description: 'The organization that owns the repository'
-    required: true
-    default: none
-  repo:  
-    description: 'The repository slug'
-    required: true
-    default: none
-  file:  
-    description: 'The package file to be pushed'
-    required: true
-    default: none
-  distro:  
-    description: 'Debian: The distribution (ubuntu)'
+  api-version:
+    description: "All: If provided, a specific version of the Cloudsmith API is installed/used."
     required: false
     default: none
-  release:  
-    description: 'Debian: The named version of the release (xenial)'
+  cli-version:
+    description: "All: If provided, a specific version of the Cloudsmith CLI is installed/used."
+    required: false
+    default: none
+  skip-install-cli:
+    description: "All: If true, the Cloudsmith CLI will not be installed."
+    required: false
+    default: "false"
+  api-key:
+    description: "All: The Cloudsmith API Key (can be provided via GitHub secrets), or set as the CLOUDSMITH_API_KEY environment variable."
+    required: falsee
+    default: none
+  command:
+    description: "All: The desired action with cloudsmith (push, list, etc)."
+    required: false
+    default: "push"
+  format:
+    description: "All: The format (deb, npm, maven, etc) for the package."
+    required: true
+    default: none
+  owner:
+    description: "All: The user/organization that owns the repository, where the package will be pushed to."
+    required: true
+    default: none
+  repo:
+    description: "All: The repository slug (textual identifier), where the package will be pushed to."
+    required: true
+    default: none
+  file:
+    description: "All: The primary file for the package (e.g. my-package.deb)."
+    required: true
+    default: none
+  republish:
+    description: "All: If true, the uploaded package will overwrite any others with the same attributes."
+    required: false
+    default: "false"
+  wait-interval:
+    description: "All: The time in seconds to between checking synchronization."
+    required: false
+    default: none
+  no-wait-for-sync:
+    description: "All: If true, don't wait for package synchronization to complete before exiting (faster uploads)."
+    required: false
+    default: "false"
+  extra:
+    description: "All: Extra arguments passed to the Cloudsmith CLI, in-verbatim."
+    required: false
+    default: none
+  distro:
+    description: "Alpine/Debian/RedHat: The distribution for the package (e.g. ubuntu)"
+    required: false
+    default: none
+  release:
+    description: "Alpine/Debian/RedHat: The named version of the release for the package (e.g. xenial)"
     required: false
     default: none
   name:
-    description: '--name TEXT: The name of this package.'
+    description: "Raw: The name for the package."
     required: false
     default: none
   summary:
-    description: '--summary TEXT: A one-liner synopsis of this package.'
+    description: "Raw: The one-liner synopsis for the package."
     required: false
     default: none
   description:
-    description: '--description TEXT: A textual description of this package.'
+    description: "Raw: The longer textual description for the package."
     required: false
     default: none
-  republish:
-    description: '--republish:  If true, the uploaded package will overwrite
-                                  any others with the same attributes.'
+  version:
+    description: "Raw: The version for the package."
     required: false
-    default: "false"
+    default: none
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
   args: # these map in order with entrypoint.sh
-    - ${{ inputs.api-key }}
-    - ${{ inputs.command }}
-    - ${{ inputs.format }}
-    - ${{ inputs.owner }}
-    - ${{ inputs.repo }}
-    - ${{ inputs.file }}
-    - ${{ inputs.distro }}
-    - ${{ inputs.release }}
-    - ${{ inputs.version }}
-    - ${{ inputs.name }}
-    - ${{ inputs.summary }}
-    - ${{ inputs.description }}
-    - ${{ inputs.republish }}
-  
+    - -a ${{ inputs.api-version }}
+    - -c ${{ inputs.cli-version }}
+    - -C ${{ inputs.skip-install-cli }}
+    - -k ${{ inputs.api-key }}
+    - -K ${{ inputs.command }}
+    - -f ${{ inputs.format }}
+    - -o ${{ inputs.owner }}
+    - -r ${{ inputs.repo }}
+    - -F ${{ inputs.file }}
+    - -P ${{ inputs.republish }}
+    - -w ${{ inputs.wait-interval }}
+    - -W ${{ inputs.no-wait-for-sync }}
+    - -d ${{ inputs.distro }}
+    - -R ${{ inputs.release }}
+    - -n ${{ inputs.name }}
+    - -s ${{ inputs.summary }}
+    - -S ${{ inputs.description }}
+    - -V ${{ inputs.version }}
+    - -- ${{ inputs.extra }}

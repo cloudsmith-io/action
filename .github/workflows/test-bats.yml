@@ -1,0 +1,14 @@
+name: Test using BATS
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Execute BATS
+        run: test/libs/bats/bin/bats test/entrypoint.bats

@@ -3,7 +3,7 @@ on: push
 jobs:
   push:
     runs-on: ubuntu-latest
-    name: Raw File Push Test
+    name: Raw File Push Demo
     steps:
       - uses: actions/checkout@v1
       - name: Push
