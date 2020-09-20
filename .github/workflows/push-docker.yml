@@ -1,14 +1,18 @@
 name: Push Docker
-on: push
+
+on: [push, pull_request]
+
 jobs:
   push:
     runs-on: ubuntu-latest
     name: Docker Push Demo
     steps:
-      - uses: actions/checkout@v1
+      - name: Check out code
+        uses: actions/checkout@v2
+
       - name: Push
         id: push
-        uses: cloudsmith-io/action@master
+        uses: ./
         with:
           api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
           command: "push"
