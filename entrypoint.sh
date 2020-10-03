@@ -168,7 +168,7 @@ function execute_push {
       }
     ;;
 
-    "dart"|"docker"|"python")
+    "dart"|"docker"|"helm"|"python")
       # Supported, but no additional options/params
     ;;
 

@@ -14,6 +14,7 @@ to its structure and terminology as possible.
   - [Dart format](https://cloudsmith.com/dart-repository/)
   - [Debian format](https://cloudsmith.com/debian-repository/)
   - [Docker format](https://cloudsmith.com/docker-registry/)
+  - [Helm format](https://cloudsmith.com/helm-repository/)
   - [Python format](https://cloudsmith.com/python-repository/)
   - [RedHat/RPM format](https://cloudsmith.com/rpm-repository/)
   - [Raw format](https://cloudsmith.com/raw-repository/)
@@ -51,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Alpine Push Demo
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -77,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Dart Push Demo
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -101,7 +102,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Debian Push Demo
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -131,7 +132,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Docker Push Demo
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -145,6 +146,30 @@ jobs:
           file: "test/fixture/alpine-docker-test.tar.gz"
 ```
 
+### Helm Chart Push
+
+```yaml
+name: Push Helm
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Helm Push Demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "helm"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-chart-example-1.0.0.tar.gz" #real file that will repeat versions
+
+```
 ### Python Package Push
 
 ```yaml
@@ -155,7 +180,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Python Push Demo
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -179,7 +204,7 @@ jobs:
     runs-on: ubuntu-latest
     name: RedHat/RPM Push Demo
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -205,7 +230,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Raw File Push Demo
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
