@@ -156,6 +156,13 @@ function setup_mocks {
     assert_output -p "EXECUTE cloudsmith push docker my-org/my-repo package.docker"
 }
 
+@test ".execute successful helm push" {
+    setup_mocks
+    run $profile_script -f helm -o my-org -r my-repo -F package.tar.gz
+    assert_success
+    assert_output -p "EXECUTE cloudsmith push python my-org/my-repo package.tar.gz"
+}
+
 @test ".execute successful python push" {
     setup_mocks
     run $profile_script -f python -o my-org -r my-repo -F package.whl
