@@ -20,7 +20,7 @@ inputs:
     default: "false"
   api-key:
     description: "All: The Cloudsmith API Key (can be provided via GitHub secrets), or set as the CLOUDSMITH_API_KEY environment variable."
-    required: falsee
+    required: false
     default: none
   command:
     description: "All: The desired action with cloudsmith (push, list, etc)."
