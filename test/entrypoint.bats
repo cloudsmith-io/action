@@ -177,6 +177,13 @@ function setup_mocks {
     assert_output -p "EXECUTE cloudsmith push raw my-org/my-repo package.zip --name=my-name --summary=Some Summary --description=Some Description --version=1.0"
 }
 
+@test ".execute successful cargo push" {
+    setup_mocks
+    run $profile_script -f cargo -o my-org -r my-repo -F package.crate
+    assert_success
+    assert_ouput -p "EXECUTE cloudsmith push cargo my-org/my-repo package.crate"
+}
+
 @test ".execute successful other push, but reports unsupported" {
     setup_mocks
     run $profile_script -f other -o my-org -r my-repo -F package.unk

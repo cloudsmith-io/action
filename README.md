@@ -11,6 +11,7 @@ to its structure and terminology as possible.
 
 - Push:
   - [Alpine format](https://cloudsmith.com/alpine-repository/)
+  - [Cargo format](https://cloudsmith.com/cargo-registry/)
   - [Dart format](https://cloudsmith.com/dart-repository/)
   - [Debian format](https://cloudsmith.com/debian-repository/)
   - [Docker format](https://cloudsmith.com/docker-registry/)
@@ -66,6 +67,30 @@ jobs:
           release: "v3.9"
           republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-alpine-example-1.0.0-r0.apk"
+```
+
+### Cargo Crate Push
+
+```yaml
+name: Push Cargo
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Cargo Push Demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "cargo"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-cargo-example-0.1.0.crate"
 ```
 
 ### Dart Package Push
