@@ -12,6 +12,7 @@ to its structure and terminology as possible.
 - Push:
   - [Alpine format](https://cloudsmith.com/alpine-repository/)
   - [Cargo format](https://cloudsmith.com/cargo-registry/)
+  - [Composer format](https://cloudsmith.com/composer-repository/)
   - [Dart format](https://cloudsmith.com/dart-repository/)
   - [Debian format](https://cloudsmith.com/debian-repository/)
   - [Docker format](https://cloudsmith.com/docker-registry/)
@@ -92,6 +93,29 @@ jobs:
           republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-cargo-example-0.1.0.crate"
 ```
+
+```yaml
+name: Push Composer
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Composer Push Demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "composer"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-composer-package-archive-0.1.0.zip"
+```
+
 
 ### Dart Package Push
 

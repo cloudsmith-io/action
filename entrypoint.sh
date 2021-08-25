@@ -168,7 +168,7 @@ function execute_push {
       }
     ;;
 
-    "cargo"|"dart"|"docker"|"helm"|"python")
+    "cargo"|"dart"|"docker"|"helm"|"python"|"composer")
       # Supported, but no additional options/params
     ;;
 
