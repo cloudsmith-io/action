@@ -23,4 +23,4 @@ jobs:
           owner: "cloudsmith"
           repo: "actions"
           republish: "true" # needed ONLY if version is not changing
-          file: "test/fixture/cloudsmith-composer-example-1.0.0.zip"
+          file: "test/fixture/cloudsmith-composer-example-1.0.0.phar"
