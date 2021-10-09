@@ -24,4 +24,4 @@ jobs:
           owner: "cloudsmith"
           repo: "actions"
           republish: "true" # needed ONLY if version is not changing
-          file: "${{ github.workspace }}/test/fixture/cloudsmith-cargo-example-0.1.0.crate"
+          file: "test/fixture/cloudsmith-cargo-example-0.1.0.crate"

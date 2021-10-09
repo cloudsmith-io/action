@@ -196,6 +196,7 @@ function execute_push {
 function main {
   setup_options "$@"
   pwd
+  echo "WORKDIR=[${WORKDIR}]"
   ls -lthra
   ls -lthra test/
   ls -lthra test/fixture
