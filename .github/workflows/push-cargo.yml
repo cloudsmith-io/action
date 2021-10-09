@@ -16,7 +16,7 @@ jobs:
 
       - name: Push
         id: push
-        uses: ./
+        uses: "${{ github.workspace }}"
         with:
           api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
           command: "push"
@@ -24,4 +24,4 @@ jobs:
           owner: "cloudsmith"
           repo: "actions"
           republish: "true" # needed ONLY if version is not changing
-          file: "./test/fixture/cloudsmith-cargo-example-0.1.0.crate"
+          file: "test/fixture/cloudsmith-cargo-example-0.1.0.crate"
