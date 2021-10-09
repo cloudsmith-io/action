@@ -182,7 +182,7 @@ function execute_push {
     export CLOUDSMITH_API_KEY="${options["api_key"]}"
   }
 
-  local extra=""
+  local extra="-d"
   check_option_set "${options["extra"]}" && {
     extra="${options["extra"]}"
   }
@@ -195,11 +195,6 @@ function execute_push {
 
 function main {
   setup_options "$@"
-  pwd
-  echo "WORKDIR=[${WORKDIR}]"
-  ls -lthra
-  ls -lthra test/
-  ls -lthra test/fixture
   install_api_cli
 
   case "${options["command"]}" in
