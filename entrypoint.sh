@@ -196,7 +196,9 @@ function execute_push {
 function main {
   setup_options "$@"
   pwd
-  tree -L 10
+  ls -lthra
+  ls -lthra tree/
+  ls -lthra tree/fixture
   install_api_cli
 
   case "${options["command"]}" in
