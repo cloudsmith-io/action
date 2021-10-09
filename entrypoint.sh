@@ -197,8 +197,8 @@ function main {
   setup_options "$@"
   pwd
   ls -lthra
-  ls -lthra tree/
-  ls -lthra tree/fixture
+  ls -lthra test/
+  ls -lthra test/fixture
   install_api_cli
 
   case "${options["command"]}" in
