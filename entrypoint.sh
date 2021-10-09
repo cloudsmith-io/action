@@ -195,6 +195,8 @@ function execute_push {
 
 function main {
   setup_options "$@"
+  pwd
+  ls -lthra
   install_api_cli
 
   case "${options["command"]}" in
