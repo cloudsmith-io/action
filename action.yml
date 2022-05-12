@@ -82,6 +82,10 @@ inputs:
     description: "Raw: The version for the package."
     required: false
     default: none
+  tags:
+    description: "All: The tags to add to the package."
+    required: false
+    default: ""
 runs:
   using: "docker"
   image: "Dockerfile"
@@ -104,4 +108,5 @@ runs:
     - -s${{ inputs.summary }}
     - -S${{ inputs.description }}
     - -V${{ inputs.version }}
+    - -t${{ inputs.tags }}
     - " -- ${{ inputs.extra }}"
