@@ -294,7 +294,6 @@ jobs:
           summary: "Github Action test of raw pushes"
           description: "See https://github.com/cloudsmith-io/action"
           version: ${{ github.sha}}
-          tags: version:latest,foo
 ```
 
 ## Thanks

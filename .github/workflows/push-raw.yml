@@ -31,4 +31,3 @@ jobs:
           description: "See https://github.com/cloudsmith-io/action"
           version: ${{ github.sha }}
           extra: "--sync-attempts 5"  # Testing extras
-          tags: version:latest,foo
