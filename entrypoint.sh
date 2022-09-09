@@ -203,7 +203,7 @@ function execute_push {
     slug=$(cloudsmith list packages "$context" --output-format pretty_json --query "$query" | python3 -c "import json, sys
 response = sys.stdin.read()
 data = json.loads(response)['data']
-assert len(data) == 1, f'Query “{query}” needs to match a single package in repository “{context}” to be able to add tags.'
+assert len(data) == 1, f'Query “$query” needs to match a single package in repository “$context” to be able to add tags.'
 print(data[0]['slug_perm'])
 ")
     cloudsmith tags add "${context}/${slug}" "${options["tags"]}"
