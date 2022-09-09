@@ -195,7 +195,7 @@ function execute_push {
   eval $request
 
   if [[ -n "${options["tags"]}" ]]; then
-    query="filename:${options["file"]}"
+    query="filename:$(basename "${options["file"]}")"
     check_option_set "${options["version"]}" && {
       query+=" version:${options["version"]}"
     }
