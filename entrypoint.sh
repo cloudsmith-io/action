@@ -40,12 +40,14 @@ function setup_options {
   options["summary"]=$DEFAULT
   options["description"]=$DEFAULT
   options["version"]=$DEFAULT
+  # Comma-separated list
+  options["tags"]=""
   options["extra"]=$DEFAULT
 
   local raw_opts="$@"
   local OPTIND OPT
 
-  while getopts ":a:c:C:k:K:f:o:r:F:P:w:W:d:R:n:s:S:V:" OPT; do
+  while getopts ":a:c:C:k:K:f:o:r:F:P:w:W:d:R:n:s:S:V:t:" OPT; do
     case $OPT in
       a) options["api_version"]="$OPTARG" ;;
       c) options["cli_version"]="$OPTARG" ;;
@@ -65,6 +67,7 @@ function setup_options {
       s) options["summary"]="$OPTARG" ;;
       S) options["description"]="$OPTARG" ;;
       V) options["version"]="$OPTARG" ;;
+      t) options["tags"]="$OPTARG" ;;
       :) die "Option -$OPTARG requires an argument." ;;
       ?)
         if [[ "$OPTARG" == *"-"* ]]; then
@@ -190,6 +193,23 @@ function execute_push {
   local request="cloudsmith push ${options["action"]} ${options["format"]} $context ${options["file"]} $params $extra"
   echo $request
   eval $request
+
+  if [[ -n "${options["tags"]}" ]]; then
+    query="filename:$(basename "${options["file"]}")"
+    check_option_set "${options["version"]}" && {
+      query+=" version:${options["version"]}"
+    }
+
+    slug=$(cloudsmith list packages "$context" --output-format pretty_json --query "$query" | python3 -c "import json, sys
+response = sys.stdin.read()
+context = sys.argv[1]
+query = sys.argv[2]
+data = json.loads(response)['data']
+assert len(data) == 1, f'Query “{query}” needs to match a single package in repository “{context}” to be able to add tags.'
+print(data[0]['slug_perm'])
+" "$context" "$query")
+    cloudsmith tags add "${context}/${slug}" "${options["tags"]}"
+  fi
 }
 
 
