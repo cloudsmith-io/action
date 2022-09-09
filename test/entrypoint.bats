@@ -5,13 +5,7 @@ load 'libs/bats-assert/load'
 profile_script="${BATS_TEST_DIRNAME}/../entrypoint.sh"
 
 function setup_mocks {
-    function cloudsmith() {
-        if [[ "$1" = "list" ]] && [[ "$2" = "packages" ]]; then
-            echo '{"data": [{"slug_perm": "ovvoZfToHWCc"}]}'
-        else
-            echo "EXECUTE cloudsmith ${@}";
-        fi
-    }
+    function cloudsmith() { echo "EXECUTE cloudsmith ${@}"; }
     export -f cloudsmith
 
     function pip() { echo "EXECUTE pip ${@}"; }
@@ -181,14 +175,6 @@ function setup_mocks {
     run $profile_script -f raw -o my-org -r my-repo -F package.zip -n my-name -s "Some Summary" -S "Some Description" -V 1.0
     assert_success
     assert_output -p "EXECUTE cloudsmith push raw my-org/my-repo package.zip --name=my-name --summary=Some Summary --description=Some Description --version=1.0"
-}
-
-@test ".execute successful raw push with tags set" {
-    setup_mocks
-    run $profile_script -f raw -o my-org -r my-repo -F package.zip -n my-name -s "Some Summary" -S "Some Description" -V 1.0 -t version:latest,foo
-    assert_success
-    assert_output -p "EXECUTE cloudsmith push raw my-org/my-repo package.zip --name=my-name --summary=Some Summary --description=Some Description --version=1.0"
-    assert_output -p "EXECUTE cloudsmith tags add my-org/my-repo/ovvoZfToHWCc version:latest,foo"
 }
 
 @test ".execute successful cargo push" {
