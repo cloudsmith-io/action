@@ -1,0 +1,29 @@
+name: Push Go
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    # run every 6 hours
+    - cron: '0 0,6,12,18 * * *'
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Go Push Demo
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "go"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-go-example.zip" #real file that will repeat versions

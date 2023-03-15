@@ -90,6 +90,13 @@ function setup_mocks {
     assert_output -p "release is required"
 }
 
+@test ".pom-file is a required argument, for maven" {
+    setup_mocks
+    run $profile_script -f maven -o my-org -r my-repo -F package.jar
+    assert_failure
+    assert_output -p "pom_file is required"
+}
+
 @test ".cli is installed" {
     setup_mocks
     run $profile_script -f raw -o my-org -r my-repo -F package.raw
@@ -182,6 +189,27 @@ function setup_mocks {
     run $profile_script -f cargo -o my-org -r my-repo -F package.crate
     assert_success
     assert_output -p "EXECUTE cloudsmith push cargo my-org/my-repo package.crate"
+}
+
+@test ".execute successful npm push" {
+    setup_mocks
+    run $profile_script -f npm -o my-org -r my-repo -F package.tgz
+    assert_success
+    assert_output -p "EXECUTE cloudsmith push npm my-org/my-repo package.tgz"
+}
+
+@test ".execute successful go push" {
+    setup_mocks
+    run $profile_script -f go -o my-org -r my-repo -F package.zip
+    assert_success
+    assert_output -p "EXECUTE cloudsmith push go my-org/my-repo package.zip"
+}
+
+@test ".execute successful maven push" {
+    setup_mocks
+    run $profile_script -f maven -o my-org -r my-repo -F package.jar -p package.pom
+    assert_success
+    assert_output -p "EXECUTE cloudsmith push maven my-org/my-repo package.jar --pom-file=package.pom"
 }
 
 @test ".execute successful other push, but reports unsupported" {

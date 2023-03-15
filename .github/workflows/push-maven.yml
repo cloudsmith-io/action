@@ -1,0 +1,30 @@
+name: Push Maven
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    # run every 6 hours
+    - cron: '0 0,6,12,18 * * *'
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Maven Push Demo
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "maven"
+          owner: "cloudsmith"
+          repo: "actions"
+          pom-file: "test/fixture/cloudsmith-maven-example.pom"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-maven-example-1.0-SNAPSHOT.jar" #real file that will repeat versions

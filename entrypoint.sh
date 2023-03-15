@@ -40,12 +40,13 @@ function setup_options {
   options["summary"]=$DEFAULT
   options["description"]=$DEFAULT
   options["version"]=$DEFAULT
+  options["pom_file"]=$DEFAULT
   options["extra"]=$DEFAULT
 
   local raw_opts="$@"
   local OPTIND OPT
 
-  while getopts ":a:c:C:k:K:f:o:r:F:P:w:W:d:R:n:s:S:V:" OPT; do
+  while getopts ":a:c:C:k:K:f:o:r:F:P:w:W:d:R:n:s:S:V:p:" OPT; do
     case $OPT in
       a) options["api_version"]="$OPTARG" ;;
       c) options["cli_version"]="$OPTARG" ;;
@@ -65,6 +66,7 @@ function setup_options {
       s) options["summary"]="$OPTARG" ;;
       S) options["description"]="$OPTARG" ;;
       V) options["version"]="$OPTARG" ;;
+      p) options["pom_file"]="$OPTARG" ;;
       :) die "Option -$OPTARG requires an argument." ;;
       ?)
         if [[ "$OPTARG" == *"-"* ]]; then
@@ -168,7 +170,12 @@ function execute_push {
       }
     ;;
 
-    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods")
+    "maven")
+      check_required_options pom_file
+      params+=" --pom-file='${options["pom_file"]}'"
+    ;;
+
+    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"go")
       # Supported, but no additional options/params
     ;;
 

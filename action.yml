@@ -82,6 +82,10 @@ inputs:
     description: "Raw: The version for the package."
     required: false
     default: none
+  pom-file:
+    description: "Maven: Relevant POM file for the maven package."
+    required: false
+    default: none
 runs:
   using: "docker"
   image: "Dockerfile"
@@ -104,4 +108,5 @@ runs:
     - -s${{ inputs.summary }}
     - -S${{ inputs.description }}
     - -V${{ inputs.version }}
+    - -p${{ inputs.pom-file }}
     - " -- ${{ inputs.extra }}"

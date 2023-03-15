@@ -17,7 +17,10 @@ to its structure and terminology as possible.
   - [Dart format](https://cloudsmith.com/dart-repository/)
   - [Debian format](https://cloudsmith.com/debian-repository/)
   - [Docker format](https://cloudsmith.com/docker-registry/)
+  - [GO format](https://cloudsmith.com/go-repository/)
   - [Helm format](https://cloudsmith.com/helm-repository/)
+  - [Maven format](https://cloudsmith.com/maven-repository/)
+  - [NPM format](https://cloudsmith.com/npm-registry/)
   - [Python format](https://cloudsmith.com/python-repository/)
   - [RedHat/RPM format](https://cloudsmith.com/rpm-repository/)
   - [Raw format](https://cloudsmith.com/raw-repository/)
@@ -196,6 +199,30 @@ jobs:
           file: "test/fixture/alpine-docker-test.tar.gz"
 ```
 
+### GO Push
+
+```yaml
+name: Push GO
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Go Push Demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "go"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-go-example.zip" #real file that will repeat versions
+```
+
 ### Helm Chart Push
 
 ```yaml
@@ -220,6 +247,56 @@ jobs:
           file: "test/fixture/cloudsmith-chart-example-1.0.0.tar.gz" #real file that will repeat versions
 
 ```
+
+### Maven Package Push
+
+```yaml
+name: Push Maven
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Maven Push Demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "maven"
+          owner: "cloudsmith"
+          repo: "actions"
+          pom-file: "test/fixture/cloudsmith-maven-example-1.0-SNAPSHOT.pom"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-maven-example-1.0-SNAPSHOT.jar" #real file that will repeat versions
+```
+
+### NPM Package Push
+
+```yaml
+name: Push NPM
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: NPM Push Demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "npm"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-npm-example-1.0.0.tgz" #real file that will repeat versions
+```
+
 ### Python Package Push
 
 ```yaml
