@@ -175,7 +175,7 @@ function execute_push {
       params+=" --pom-file='${options["pom_file"]}'"
     ;;
 
-    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"go")
+    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"nuget"|"go")
       # Supported, but no additional options/params
     ;;
 

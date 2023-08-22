@@ -21,6 +21,7 @@ to its structure and terminology as possible.
   - [Helm format](https://cloudsmith.com/helm-repository/)
   - [Maven format](https://cloudsmith.com/maven-repository/)
   - [NPM format](https://cloudsmith.com/npm-registry/)
+  - [Nuget format](https://cloudsmith.com/nuget-repository/)
   - [Python format](https://cloudsmith.com/python-repository/)
   - [RedHat/RPM format](https://cloudsmith.com/rpm-repository/)
   - [Raw format](https://cloudsmith.com/raw-repository/)
@@ -295,6 +296,30 @@ jobs:
           repo: "actions"
           republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-npm-example-1.0.0.tgz" #real file that will repeat versions
+```
+
+### Nuget Package Push
+
+```yaml
+name: Push Nuget
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Nuget Push Demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "nuget"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-nuget-example-1.0.nupkg" #real file that will repeat versions
 ```
 
 ### Python Package Push
