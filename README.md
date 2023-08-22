@@ -21,7 +21,7 @@ to its structure and terminology as possible.
   - [Helm format](https://cloudsmith.com/helm-repository/)
   - [Maven format](https://cloudsmith.com/maven-repository/)
   - [NPM format](https://cloudsmith.com/npm-registry/)
-  - [Nuget format](https://cloudsmith.com/nuget-repository/)
+  - [Nuget format](https://cloudsmith.com/nuget-feed)
   - [Python format](https://cloudsmith.com/python-repository/)
   - [RedHat/RPM format](https://cloudsmith.com/rpm-repository/)
   - [Raw format](https://cloudsmith.com/raw-repository/)
