@@ -319,7 +319,8 @@ jobs:
           owner: "cloudsmith"
           repo: "actions"
           republish: "true" # needed ONLY if version is not changing
-          file: "test/fixture/cloudsmith-nuget-example-1.0.nupkg" #real file that will repeat versions
+          file: "test/fixture/cloudsmith-nuget-example.1.0.0.nupkg" #real file that will repeat versions
+          symbols-file: "test/fixture/cloudsmith-nuget-example.1.0.0.snupkg"
 ```
 
 ### Python Package Push

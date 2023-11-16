@@ -41,12 +41,13 @@ function setup_options {
   options["description"]=$DEFAULT
   options["version"]=$DEFAULT
   options["pom_file"]=$DEFAULT
+  options["symbols_file"]=$DEFAULT
   options["extra"]=$DEFAULT
 
   local raw_opts="$@"
   local OPTIND OPT
 
-  while getopts ":a:c:C:k:K:f:o:r:F:P:w:W:d:R:n:s:S:V:p:" OPT; do
+  while getopts ":a:c:C:k:K:f:o:r:F:P:w:W:d:R:n:N:s:S:V:p:" OPT; do
     case $OPT in
       a) options["api_version"]="$OPTARG" ;;
       c) options["cli_version"]="$OPTARG" ;;
@@ -63,6 +64,7 @@ function setup_options {
       d) options["distro"]="$OPTARG" ;;
       R) options["release"]="$OPTARG" ;;
       n) options["name"]="$OPTARG" ;;
+      N) options["symbols_file"]="$OPTARG" ;;
       s) options["summary"]="$OPTARG" ;;
       S) options["description"]="$OPTARG" ;;
       V) options["version"]="$OPTARG" ;;
@@ -170,12 +172,18 @@ function execute_push {
       }
     ;;
 
+    "nuget")
+      check_option_set "${options["symbols_file"]}" && {
+        params+=" --symbols-file='${options["symbols_file"]}'"
+      }
+    ;;
+
     "maven")
       check_required_options pom_file
       params+=" --pom-file='${options["pom_file"]}'"
     ;;
 
-    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"nuget"|"go")
+    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"go")
       # Supported, but no additional options/params
     ;;
 
