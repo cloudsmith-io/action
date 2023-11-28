@@ -200,9 +200,9 @@ function setup_mocks {
 
 @test ".execute successful nuget push" {
     setup_mocks
-    run $profile_script -f nuget -o my-org -r my-repo -F package.nupkg -N package.snupkg
+    run $profile_script -f nuget -o my-org -r my-repo -F package.nupkg
     assert_success
-    assert_output -p "EXECUTE cloudsmith push nuget my-org/my-repo package.nupkg --symbols-file=package.snupkg"
+    assert_output -p "EXECUTE cloudsmith push nuget my-org/my-repo package.nupkg"
 }
 
 @test ".execute successful go push" {

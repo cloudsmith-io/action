@@ -41,7 +41,7 @@ function setup_options {
   options["description"]=$DEFAULT
   options["version"]=$DEFAULT
   options["pom_file"]=$DEFAULT
-  options["symbols_file"]=$DEFAULT
+  # options["symbols_file"]=$DEFAULT - Awaiting ENG-1456
   options["extra"]=$DEFAULT
 
   local raw_opts="$@"
@@ -64,7 +64,7 @@ function setup_options {
       d) options["distro"]="$OPTARG" ;;
       R) options["release"]="$OPTARG" ;;
       n) options["name"]="$OPTARG" ;;
-      N) options["symbols_file"]="$OPTARG" ;;
+      # N) options["symbols_file"]="$OPTARG" ;; awaiting ENG-1456
       s) options["summary"]="$OPTARG" ;;
       S) options["description"]="$OPTARG" ;;
       V) options["version"]="$OPTARG" ;;
@@ -172,18 +172,19 @@ function execute_push {
       }
     ;;
 
-    "nuget")
-      check_option_set "${options["symbols_file"]}" && {
-        params+=" --symbols-file='${options["symbols_file"]}'"
-      }
-    ;;
+    # Nuget symbols - awaiting fix ENG-1456
+    # "nuget")
+    #   check_option_set "${options["symbols_file"]}" && {
+    #     params+=" --symbols-file='${options["symbols_file"]}'"
+    #   }
+    # ;;
 
     "maven")
       check_required_options pom_file
       params+=" --pom-file='${options["pom_file"]}'"
     ;;
 
-    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"go")
+    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"nuget"|"go")
       # Supported, but no additional options/params
     ;;
 

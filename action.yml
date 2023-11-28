@@ -105,7 +105,7 @@ runs:
     - -d${{ inputs.distro }}
     - -R${{ inputs.release }}
     - -n${{ inputs.name }}
-    - -N${{ inputs.symbols-file }}
+    # - -N${{ inputs.symbols-file }} awaiting ENG-1456
     - -s${{ inputs.summary }}
     - -S${{ inputs.description }}
     - -V${{ inputs.version }}
