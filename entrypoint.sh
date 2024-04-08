@@ -23,8 +23,6 @@ function die {
 
 
 function setup_options {
-  options["api_version"]=$DEFAULT
-  options["cli_version"]=$DEFAULT
   options["api_key"]=$DEFAULT
   options["command"]="push"
   options["format"]=$DEFAULT
@@ -37,21 +35,19 @@ function setup_options {
   options["distro"]=$DEFAULT
   options["release"]=$DEFAULT
   options["name"]=$DEFAULT
+  options["scope"]=$DEFAULT
   options["summary"]=$DEFAULT
   options["description"]=$DEFAULT
   options["version"]=$DEFAULT
   options["pom_file"]=$DEFAULT
-  # options["symbols_file"]=$DEFAULT - Awaiting ENG-1456
+  options["symbols_file"]=$DEFAULT
   options["extra"]=$DEFAULT
 
   local raw_opts="$@"
   local OPTIND OPT
 
-  while getopts ":a:c:C:k:K:f:o:r:F:P:w:W:d:R:n:N:s:S:V:p:" OPT; do
+  while getopts ":k:K:f:o:r:F:P:w:W:d:R:n:N:s:S:D:V:p:" OPT; do
     case $OPT in
-      a) options["api_version"]="$OPTARG" ;;
-      c) options["cli_version"]="$OPTARG" ;;
-      C) options["skip_install_cli"]="$OPTARG" ;;
       k) options["api_key"]="$OPTARG" ;;
       K) options["command"]="$OPTARG" ;;
       f) options["format"]="$OPTARG" ;;
@@ -64,9 +60,10 @@ function setup_options {
       d) options["distro"]="$OPTARG" ;;
       R) options["release"]="$OPTARG" ;;
       n) options["name"]="$OPTARG" ;;
-      # N) options["symbols_file"]="$OPTARG" ;; awaiting ENG-1456
+      N) options["symbols_file"]="$OPTARG" ;;
+      S) options["scope"]="$OPTARG" ;;
       s) options["summary"]="$OPTARG" ;;
-      S) options["description"]="$OPTARG" ;;
+      D) options["description"]="$OPTARG" ;;
       V) options["version"]="$OPTARG" ;;
       p) options["pom_file"]="$OPTARG" ;;
       :) die "Option -$OPTARG requires an argument." ;;
@@ -114,25 +111,6 @@ function check_required_options {
 }
 
 
-function install_api_cli {
-  if [[ "${options["skip_install_cli"]}" == "true" ]]; then
-    warn "Skipping Cloudsmith API/CLI installation"
-  else
-    echo "Starting Cloudsmith API/CLI installation ..."
-
-    check_option_set "${options["cli_version"]}" && {
-      pip install cloudsmith-cli==${options["cli_version"]}
-    } || {
-      pip install cloudsmith-cli
-    }
-
-    check_option_set "${options["api_version"]}" && {
-      pip install cloudsmith-api==${options["api_version"]}
-    }
-  fi
-}
-
-
 function execute_push {
   check_required_options format owner repo file
 
@@ -172,19 +150,23 @@ function execute_push {
       }
     ;;
 
-    # Nuget symbols - awaiting fix ENG-1456
-    # "nuget")
-    #   check_option_set "${options["symbols_file"]}" && {
-    #     params+=" --symbols-file='${options["symbols_file"]}'"
-    #   }
-    # ;;
+    "nuget")
+      check_option_set "${options["symbols_file"]}" && {
+        params+=" --symbols-file='${options["symbols_file"]}'"
+      }
+    ;;
 
     "maven")
       check_required_options pom_file
       params+=" --pom-file='${options["pom_file"]}'"
     ;;
 
-    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"nuget"|"go")
+    "swift")
+      check_required_options scope name version
+      params+=" --scope='${options["scope"]}' --name='${options["name"]}' --version='${options["version"]}'"
+    ;;
+
+    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"go")
       # Supported, but no additional options/params
     ;;
 
@@ -211,7 +193,6 @@ function execute_push {
 
 function main {
   setup_options "$@"
-  install_api_cli
 
   case "${options["command"]}" in
     "push")

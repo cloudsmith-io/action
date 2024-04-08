@@ -1,0 +1,32 @@
+name: Push Swift 
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    # run every 6 hours
+    - cron: '0 0,6,12,18 * * *'
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Swift Push Demo
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "swift"
+          name: "cloudsmith-swift-example"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          scope: "cloudsmith"
+          version: "1.0.0"
+          file: "test/fixture/cloudsmith-swift-example-1.0.0.zip"

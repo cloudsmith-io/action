@@ -70,6 +70,10 @@ inputs:
     description: "Raw: The name for the package."
     required: false
     default: none
+  scope:
+    description: "Swift: A scope provides a namespace for related packages within the package registry."
+    required: false
+    default: none
   summary:
     description: "Raw: The one-liner synopsis for the package."
     required: false
@@ -87,27 +91,37 @@ inputs:
     required: false
     default: none
 runs:
-  using: "docker"
-  image: "Dockerfile"
-  args:
-    - -a${{ inputs.api-version }}
-    - -c${{ inputs.cli-version }}
-    - -C${{ inputs.skip-install-cli }}
-    - -k${{ inputs.api-key }}
-    - -K${{ inputs.command }}
-    - -f${{ inputs.format }}
-    - -o${{ inputs.owner }}
-    - -r${{ inputs.repo }}
-    - -F${{ inputs.file }}
-    - -P${{ inputs.republish }}
-    - -w${{ inputs.wait-interval }}
-    - -W${{ inputs.no-wait-for-sync }}
-    - -d${{ inputs.distro }}
-    - -R${{ inputs.release }}
-    - -n${{ inputs.name }}
-    # - -N${{ inputs.symbols-file }} awaiting ENG-1456
-    - -s${{ inputs.summary }}
-    - -S${{ inputs.description }}
-    - -V${{ inputs.version }}
-    - -p${{ inputs.pom-file }}
-    - " -- ${{ inputs.extra }}"
+  using: "composite"
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+    - name: Install cloudsmith-cli and cloudsmith-api ...
+      if: inputs.skip-install-cli == 'false'
+      shell: bash
+      run: |
+        pip install \
+        cloudsmith-api${{ inputs.api-version != 'none' && format('=={0}', inputs.api-version) || ''}} \
+        cloudsmith-cli${{ inputs.cli-version != 'none' && format('=={0}', inputs.cli-version) || ''}} \
+    - name: Run Entrypoint
+      shell: bash
+      run: |
+        bash entrypoint.sh \
+        -D${{ inputs.description }} \
+        -k${{ inputs.api-key }} \
+        -K${{ inputs.command }} \
+        -f${{ inputs.format }} \
+        -o${{ inputs.owner }} \
+        -r${{ inputs.repo }} \
+        -F${{ inputs.file }} \
+        -P${{ inputs.republish }} \
+        -w${{ inputs.wait-interval }} \
+        -W${{ inputs.no-wait-for-sync }} \
+        -d${{ inputs.distro }} \
+        -R${{ inputs.release }} \
+        -n${{ inputs.name }} \
+        -N${{ inputs.symbols-file }} \
+        -s${{ inputs.summary }} \
+        -S${{ inputs.scope }} \
+        -V${{ inputs.version }} \
+        -p${{ inputs.pom-file }} \
+        -- ${{ inputs.extra }}

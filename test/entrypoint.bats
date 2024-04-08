@@ -97,35 +97,25 @@ function setup_mocks {
     assert_output -p "pom_file is required"
 }
 
-@test ".cli is installed" {
+@test ".name is a required argument, for swift" {
     setup_mocks
-    run $profile_script -f raw -o my-org -r my-repo -F package.raw
-    assert_success
-    assert_output -p "EXECUTE pip install cloudsmith-cli"
-    refute_output -p "EXECUTE pip install cloudsmith-api"
+    run $profile_script -f swift -o my-org -r my-repo -F package.zip -S my-scope -V 1.0.0
+    assert_failure
+    assert_output -p "name is required"
 }
 
-@test ".cli is installed, with a specific version" {
+@test ".scope is a required argument, for swift" {
     setup_mocks
-    run $profile_script -f raw -o my-org -r my-repo -F package.raw -c 1.0
-    assert_success
-    assert_output -p "EXECUTE pip install cloudsmith-cli==1.0"
-    refute_output -p "EXECUTE pip install cloudsmith-api"
+    run $profile_script -f swift -o my-org -r my-repo -F package.zip -n my-package -V 1.0.0
+    assert_failure
+    assert_output -p "scope is required"
 }
 
-@test ".api is installed, with a specific version" {
+@test ".version is a required argument, for swift" {
     setup_mocks
-    run $profile_script -f raw -o my-org -r my-repo -F package.raw -a 1.0
-    assert_success
-    assert_output -p "EXECUTE pip install cloudsmith-cli"
-    assert_output -p "EXECUTE pip install cloudsmith-api==1.0"
-}
-
-@test ".cli is skipped if specified" {
-    setup_mocks
-    run $profile_script -f raw -o my-org -r my-repo -F package.raw -C true
-    assert_success
-    refute_output -p "EXECUTE pip install cloudsmith-cli"
+    run $profile_script -f swift -o my-org -r my-repo -F package.zip -S my-scope -n my-package
+    assert_failure
+    assert_output -p "version is required"
 }
 
 @test ".execute successful debian push" {
@@ -179,7 +169,7 @@ function setup_mocks {
 
 @test ".execute successful raw push" {
     setup_mocks
-    run $profile_script -f raw -o my-org -r my-repo -F package.zip -n my-name -s "Some Summary" -S "Some Description" -V 1.0
+    run $profile_script -f raw -o my-org -r my-repo -F package.zip -n my-name -s "Some Summary" -D "Some Description" -V 1.0
     assert_success
     assert_output -p "EXECUTE cloudsmith push raw my-org/my-repo package.zip --name=my-name --summary=Some Summary --description=Some Description --version=1.0"
 }
@@ -217,6 +207,13 @@ function setup_mocks {
     run $profile_script -f maven -o my-org -r my-repo -F package.jar -p package.pom
     assert_success
     assert_output -p "EXECUTE cloudsmith push maven my-org/my-repo package.jar --pom-file=package.pom"
+}
+
+@test ".execute successful swift push" {
+    setup_mocks
+    run $profile_script -f swift -o my-org -r my-repo -F package.zip -n my-package -V 1.0.0 -S my-scope
+    assert_success
+    assert_output -p "EXECUTE cloudsmith push swift my-org/my-repo package.zip --scope=my-scope --name=my-package --version=1.0.0"
 }
 
 @test ".execute successful other push, but reports unsupported" {

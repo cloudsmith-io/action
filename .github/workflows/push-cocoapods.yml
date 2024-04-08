@@ -1,11 +1,11 @@
 name: Push Cocoapods
 
- on:
+on:
    push:
      branches:
        - master
 
- jobs:
+jobs:
    push:
      runs-on: ubuntu-latest
      name: Cocoapods Push Demo
