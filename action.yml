@@ -105,7 +105,7 @@ runs:
     - name: Run Entrypoint
       shell: bash
       run: |
-        bash entrypoint.sh \
+        bash ${{ github.action_path }}/entrypoint.sh \
         -D${{ inputs.description }} \
         -k${{ inputs.api-key }} \
         -K${{ inputs.command }} \
