@@ -90,6 +90,10 @@ inputs:
     description: "Maven: Relevant POM file for the maven package."
     required: false
     default: none
+  symbols-file:
+    description: "Nuget: Relevant Symbols file for the nuget package."
+    required: false
+    default: none
 runs:
   using: "composite"
   steps:
