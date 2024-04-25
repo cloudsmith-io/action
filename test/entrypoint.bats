@@ -160,6 +160,13 @@ function setup_mocks {
     assert_output -p "EXECUTE cloudsmith push helm my-org/my-repo package.tar.gz"
 }
 
+@test ".execute successful hex push" {
+    setup_mocks
+    run $profile_script -f hex -o my-org -r my-repo -F package.tar
+    assert_success
+    assert_output -p "EXECUTE cloudsmith push hex my-org/my-repo package.tar"
+}
+
 @test ".execute successful python push" {
     setup_mocks
     run $profile_script -f python -o my-org -r my-repo -F package.whl
