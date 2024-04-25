@@ -46,7 +46,7 @@ function setup_options {
   local raw_opts="$@"
   local OPTIND OPT
 
-  while getopts ":k:K:f:o:r:F:P:w:W:d:R:n:N:s:S:D:V:p:" OPT; do
+  while getopts ":k:K:f:o:r:F:P:w:W:d:R:n:N:S:s:D:V:p:" OPT; do
     case $OPT in
       k) options["api_key"]="$OPTARG" ;;
       K) options["command"]="$OPTARG" ;;
