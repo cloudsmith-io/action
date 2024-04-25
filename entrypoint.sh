@@ -166,7 +166,7 @@ function execute_push {
       params+=" --scope='${options["scope"]}' --name='${options["name"]}' --version='${options["version"]}'"
     ;;
 
-    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"go")
+    "cargo"|"dart"|"docker"|"helm"|"python"|"composer"|"cocoapods"|"npm"|"go"|"hex")
       # Supported, but no additional options/params
     ;;
 
