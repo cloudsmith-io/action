@@ -19,6 +19,7 @@ to its structure and terminology as possible.
   - [Docker format](https://cloudsmith.com/docker-registry/)
   - [GO format](https://cloudsmith.com/go-repository/)
   - [Helm format](https://cloudsmith.com/helm-repository/)
+  - [Hex format](https://cloudsmith.com/product/formats/hex-repository)
   - [Maven format](https://cloudsmith.com/maven-repository/)
   - [NPM format](https://cloudsmith.com/npm-registry/)
   - [Nuget format](https://cloudsmith.com/nuget-feed)
@@ -247,6 +248,30 @@ jobs:
           republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-chart-example-1.0.0.tar.gz" #real file that will repeat versions
 
+```
+
+### Hex Push
+
+```yaml
+name: Push Hex
+on: push
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    name: Hex Push Demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push
+        id: push
+        uses: ./
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "hex"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-hex-example-1.0.0.tar" #real file that will repeat versions
 ```
 
 ### Maven Package Push
