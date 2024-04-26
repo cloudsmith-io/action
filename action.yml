@@ -110,7 +110,6 @@ runs:
       shell: bash
       run: |
         bash ${{ github.action_path }}/entrypoint.sh \
-        -D${{ inputs.description }} \
         -k${{ inputs.api-key }} \
         -K${{ inputs.command }} \
         -f${{ inputs.format }} \
@@ -124,8 +123,9 @@ runs:
         -R${{ inputs.release }} \
         -n${{ inputs.name }} \
         -N${{ inputs.symbols-file }} \
-        -s${{ inputs.summary }} \
         -S${{ inputs.scope }} \
+        -s${{ inputs.summary }} \
+        -D${{ inputs.description }} \
         -V${{ inputs.version }} \
         -p${{ inputs.pom-file }} \
         -- ${{ inputs.extra }}
