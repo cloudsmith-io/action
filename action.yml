@@ -110,22 +110,22 @@ runs:
       shell: bash
       run: |
         bash ${{ github.action_path }}/entrypoint.sh \
-        -k${{ inputs.api-key }} \
-        -K${{ inputs.command }} \
-        -f${{ inputs.format }} \
-        -o${{ inputs.owner }} \
-        -r${{ inputs.repo }} \
-        -F${{ inputs.file }} \
-        -P${{ inputs.republish }} \
-        -w${{ inputs.wait-interval }} \
-        -W${{ inputs.no-wait-for-sync }} \
-        -d${{ inputs.distro }} \
-        -R${{ inputs.release }} \
-        -n${{ inputs.name }} \
-        -N${{ inputs.symbols-file }} \
-        -S${{ inputs.scope }} \
-        -s${{ inputs.summary }} \
-        -D${{ inputs.description }} \
-        -V${{ inputs.version }} \
-        -p${{ inputs.pom-file }} \
+        -k ${{ inputs.api-key }} \
+        -K ${{ inputs.command }} \
+        -f ${{ inputs.format }} \
+        -o ${{ inputs.owner }} \
+        -r ${{ inputs.repo }} \
+        -F ${{ inputs.file }} \
+        -P ${{ inputs.republish }} \
+        -w ${{ inputs.wait-interval }} \
+        -W ${{ inputs.no-wait-for-sync }} \
+        -d ${{ inputs.distro }} \
+        -R ${{ inputs.release }} \
+        -n ${{ inputs.name }} \
+        -N ${{ inputs.symbols-file }} \
+        -S ${{ inputs.scope }} \
+        -s "${{ inputs.summary }}" \
+        -D "${{ inputs.description }}" \
+        -V ${{ inputs.version }} \
+        -p ${{ inputs.pom-file }} \
         -- ${{ inputs.extra }}
