@@ -185,9 +185,17 @@ function execute_push {
     extra="${options["extra"]}"
   }
 
-  local request="cloudsmith push ${options["action"]} ${options["format"]} $context ${options["file"]} $params $extra"
-  echo $request
-  eval $request
+  # Loop over files that match the pattern
+  for file in ${options["file"]}
+  do
+    if [[ -f "$file" ]]; then
+      local request="cloudsmith push ${options["action"]} ${options["format"]} $context $file $params $extra"
+      echo $request
+      eval $request
+    else
+      warn "File $file does not exist"
+    fi
+  done
 }
 
 
