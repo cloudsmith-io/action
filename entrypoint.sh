@@ -186,7 +186,7 @@ function execute_push {
   }
 
   # Loop over files that match the pattern
-  for file in ${options["file"]}
+  for file in $(eval echo ${options["file"]})
   do
     if [[ -f "$file" ]]; then
       local request="cloudsmith push ${options["action"]} ${options["format"]} $context $file $params $extra"
