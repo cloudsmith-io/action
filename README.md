@@ -50,6 +50,8 @@ The following examples use static files located within `test/fixtures`. When rep
 
 To pin to a specific release of this Github Action, replace `use: cloudsmith-io/action@master` with the version you require e.g. `uses: cloudsmith-io/action@0.4.0`.
 
+You can also add "tags" to your upload process by specifying `tags` in your workflow, this is a comma separated string. (Some special characters like `:` are not allowed).
+
 ### Alpine Package Push
 
 ```yaml
@@ -74,6 +76,7 @@ jobs:
           release: "v3.9"
           republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-alpine-example-1.0.0-r0.apk"
+          tags: "tag1, tag2, tag3"
 ```
 
 ### Cargo Crate Push
@@ -120,6 +123,7 @@ jobs:
           repo: "actions"
           republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-composer-package-archive-0.1.0.zip"
+          tags: "tag1, tag2, tag3"
 ```
 
 

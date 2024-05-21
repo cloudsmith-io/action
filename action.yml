@@ -129,7 +129,7 @@ runs:
         -N ${{ inputs.symbols-file }} \
         -S ${{ inputs.scope }} \
         -s "${{ inputs.summary }}" \
-        -t "${{ inputes.tags }}" \
+        -t "${{ inputs.tags }}" \
         -D "${{ inputs.description }}" \
         -V ${{ inputs.version }} \
         -p ${{ inputs.pom-file }} \
