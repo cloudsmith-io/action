@@ -94,6 +94,10 @@ inputs:
     description: "Nuget: Relevant Symbols file for the nuget package."
     required: false
     default: none
+  tags:
+    description: "The tags for the package, comma seperated"
+    required: false
+    default: none
 runs:
   using: "composite"
   steps:
@@ -125,6 +129,7 @@ runs:
         -N ${{ inputs.symbols-file }} \
         -S ${{ inputs.scope }} \
         -s "${{ inputs.summary }}" \
+        -t "${{ inputes.tags }}" \
         -D "${{ inputs.description }}" \
         -V ${{ inputs.version }} \
         -p ${{ inputs.pom-file }} \

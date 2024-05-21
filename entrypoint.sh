@@ -42,11 +42,12 @@ function setup_options {
   options["pom_file"]=$DEFAULT
   options["symbols_file"]=$DEFAULT
   options["extra"]=$DEFAULT
+  options["tags"]=$DEFAULT
 
   local raw_opts="$@"
   local OPTIND OPT
 
-  while getopts ":k:K:f:o:r:F:P:w:W:d:R:n:N:S:s:D:V:p:" OPT; do
+  while getopts ":k:K:f:o:r:F:P:w:W:d:R:n:N:S:s:t:D:V:p:" OPT; do
     case $OPT in
       k) options["api_key"]="$OPTARG" ;;
       K) options["command"]="$OPTARG" ;;
@@ -63,6 +64,7 @@ function setup_options {
       N) options["symbols_file"]="$OPTARG" ;;
       S) options["scope"]="$OPTARG" ;;
       s) options["summary"]="$OPTARG" ;;
+      t) options["tags"]="$OPTARG" ;;
       D) options["description"]="$OPTARG" ;;
       V) options["version"]="$OPTARG" ;;
       p) options["pom_file"]="$OPTARG" ;;
@@ -180,6 +182,10 @@ function execute_push {
     export CLOUDSMITH_API_KEY="${options["api_key"]}"
   }
 
+  check_option_set "${options["tags"]}" && {
+    params+=" --tags='${options["tags"]}'"
+  }
+
   local extra=""
   check_option_set "${options["extra"]}" && {
     extra="${options["extra"]}"
@@ -189,7 +195,7 @@ function execute_push {
   for file in $(eval echo ${options["file"]})
   do
     if [[ -f "$file" ]]; then
-      local request="cloudsmith push ${options["action"]} ${options["format"]} $context $file $params $extra"
+      local request="cloudsmith push ${options["action"]} ${options["format"]} $context $file $params $extra $tags"
       echo $request
       eval $request
     else
