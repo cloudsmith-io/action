@@ -292,6 +292,7 @@ jobs:
     name: Maven Push Demo
     steps:
       - uses: actions/checkout@v2
+
       - name: Push
         id: push
         uses: ./
@@ -301,9 +302,9 @@ jobs:
           format: "maven"
           owner: "cloudsmith"
           repo: "actions"
-          pom-file: "test/fixture/cloudsmith-maven-example-1.0-SNAPSHOT.pom"
+          pom-file: "pom.xml"
           republish: "true" # needed ONLY if version is not changing
-          file: "test/fixture/cloudsmith-maven-example-1.0-SNAPSHOT.jar" #real file that will repeat versions
+          file: "target/yourproject-0.0.1-SNAPSHOT.jar" #real file that will repeat versions
 ```
 
 ### NPM Package Push
