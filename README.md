@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Alpine Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -94,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Cargo Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -118,7 +118,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Composer Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -135,6 +135,29 @@ jobs:
 
 ### CocoaPods Package Push
 
+```yaml
+name: Push Cocoapods
+on: push
+jobs:
+   push:
+     runs-on: ubuntu-latest
+     name: Cocoapods Push Demo
+     steps:
+      - uses: actions/checkout@v4
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "cocoapods"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true" # needed ONLY if version is not changing
+          file: "test/fixture/cloudsmith-cocoapods-example-1.0.0.zip"
+          tags: "tag1, tag2, tag3"
+```
+
 ### Dart Package Push
 
 ```yaml
@@ -145,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Dart Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -169,7 +192,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Debian Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -199,7 +222,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Docker Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -223,7 +246,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Go Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: ./
@@ -247,7 +270,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Helm Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: ./
@@ -272,7 +295,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Hex Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: ./
@@ -296,7 +319,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Maven Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: ./
@@ -321,7 +344,7 @@ jobs:
     runs-on: ubuntu-latest
     name: NPM Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: ./
@@ -345,7 +368,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Nuget Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: ./
@@ -370,7 +393,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Python Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -394,7 +417,7 @@ jobs:
     runs-on: ubuntu-latest
     name: RedHat/RPM Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
@@ -420,7 +443,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Raw File Push Demo
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Push
         id: push
         uses: cloudsmith-io/action@master
