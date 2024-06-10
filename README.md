@@ -10,7 +10,7 @@ to its structure and terminology as possible.
 **Supported:**
 
 - Push:
-  - [Alpine format](https://cloudsmith.com/alpine-repository/)
+  - [Alpine](#alpine-package-push)
   - [Cargo format](https://cloudsmith.com/cargo-registry/)
   - [CocoaPods format](https://cloudsmith.com/cocoapods-repository/)
   - [Composer format](https://cloudsmith.com/composer-repository/)
@@ -25,7 +25,7 @@ to its structure and terminology as possible.
   - [Nuget format](https://cloudsmith.com/nuget-feed)
   - [Python format](https://cloudsmith.com/python-repository/)
   - [RedHat/RPM format](https://cloudsmith.com/rpm-repository/)
-  - [Raw format](https://cloudsmith.com/raw-repository/)
+  - [Raw](#raw-file-push)
 
 **Not Supported, But May Work:**
 
