@@ -34,6 +34,11 @@ to its structure and terminology as possible.
 
 Please feel free to contribute pull requests to add additional support!
 
+Learn more about hosting format registries at Cloudsmith:
+
+[Alpine](https://cloudsmith.com/alpine-repository) | [Cargo](https://cloudsmith.com/cargo-registry/) | [CocoaPods](https://cloudsmith.com/cocoapods-repository/) | [Composer](https://cloudsmith.com/composer-repository/) | [Dart](https://cloudsmith.com/dart-repository/) | [Debian](https://cloudsmith.com/debian-repository/) | [Docker](https://cloudsmith.com/docker-registry/) | [Go](https://cloudsmith.com/go-repository/) | [Helm](https://cloudsmith.com/helm-repository/) | [Hex](https://cloudsmith.com/product/formats/hex-repository) | [Maven](https://cloudsmith.com/maven-repository/) | [npm](https://cloudsmith.com/npm-registry/) | [NuGet](https://cloudsmith.com/nuget-feed) | [Python](https://cloudsmith.com/python-repository/) | [RedHat/RPM](https://cloudsmith.com/rpm-repository/) | [Raw](https://cloudsmith.com/raw-repository/)
+
+
 ## Cloudsmith API Key
 
 The API key is required for the cloudsmith-cli to work.
