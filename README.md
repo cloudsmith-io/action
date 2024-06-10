@@ -11,20 +11,20 @@ to its structure and terminology as possible.
 
 - Push:
   - [Alpine](#alpine-package-push)
-  - [Cargo format](https://cloudsmith.com/cargo-registry/)
-  - [CocoaPods format](https://cloudsmith.com/cocoapods-repository/)
-  - [Composer format](https://cloudsmith.com/composer-repository/)
-  - [Dart format](https://cloudsmith.com/dart-repository/)
-  - [Debian format](https://cloudsmith.com/debian-repository/)
-  - [Docker format](https://cloudsmith.com/docker-registry/)
-  - [GO format](https://cloudsmith.com/go-repository/)
-  - [Helm format](https://cloudsmith.com/helm-repository/)
-  - [Hex format](https://cloudsmith.com/product/formats/hex-repository)
-  - [Maven format](https://cloudsmith.com/maven-repository/)
-  - [NPM format](https://cloudsmith.com/npm-registry/)
-  - [Nuget format](https://cloudsmith.com/nuget-feed)
-  - [Python format](https://cloudsmith.com/python-repository/)
-  - [RedHat/RPM format](https://cloudsmith.com/rpm-repository/)
+  - [Cargo](#cargo-crate-push)
+  - [CocoaPods]((#cocoapods-package-push)
+  - [Composer](#composer-package-push)
+  - [Dart](#dart-package-push)
+  - [Debian](#debian-package-push)
+  - [Docker](#docker-image-push)
+  - [GO](#go-push)
+  - [Helm](#helm-chart-push)
+  - [Hex](#hex-push)
+  - [Maven](#maven-package-push)
+  - [npm](#npm-package-push)
+  - [NuGet](#nuget-package-push)
+  - [Python](#python-package-push)
+  - [RedHat/RPM](#redhat/rpm-package-push)
   - [Raw](#raw-file-push)
 
 **Not Supported, But May Work:**
@@ -103,6 +103,8 @@ jobs:
           file: "test/fixture/cloudsmith-cargo-example-0.1.0.crate"
 ```
 
+### Composer Package Push
+
 ```yaml
 name: Push Composer
 on: push
@@ -126,6 +128,7 @@ jobs:
           tags: "tag1, tag2, tag3"
 ```
 
+### CocoaPods Package Push
 
 ### Dart Package Push
 
