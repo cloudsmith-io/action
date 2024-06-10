@@ -11,7 +11,7 @@ jobs:
      name: Cocoapods Push Demo
      steps:
        - name: Check out code
-         uses: actions/checkout@v2
+         uses: actions/checkout@v4
 
        - name: Push
          id: push
