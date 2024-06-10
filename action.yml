@@ -103,6 +103,8 @@ runs:
   steps:
     - name: Setup Python
       uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
     - name: Install cloudsmith-cli and cloudsmith-api ...
       if: inputs.skip-install-cli == 'false'
       shell: bash
