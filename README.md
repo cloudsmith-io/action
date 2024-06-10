@@ -12,7 +12,7 @@ to its structure and terminology as possible.
 - Push:
   - [Alpine](#alpine-package-push)
   - [Cargo](#cargo-crate-push)
-  - [CocoaPods]((#cocoapods-package-push)
+  - [CocoaPods](#cocoapods-package-push)
   - [Composer](#composer-package-push)
   - [Dart](#dart-package-push)
   - [Debian](#debian-package-push)
@@ -24,7 +24,7 @@ to its structure and terminology as possible.
   - [npm](#npm-package-push)
   - [NuGet](#nuget-package-push)
   - [Python](#python-package-push)
-  - [RedHat/RPM](#redhat/rpm-package-push)
+  - [RedHat/RPM](#redhatrpm-package-push)
   - [Raw](#raw-file-push)
 
 **Not Supported, But May Work:**
