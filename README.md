@@ -2,10 +2,27 @@
 
 Push packages easily to your [Cloudsmith](https://cloudsmith.com) repositories, using the [Cloudsmith CLI](https://pypi.org/project/cloudsmith-cli/).
 
-## Cloudsmith CLI
+## Cloudsmith CLI and Executable
 
-This action uses the Cloudsmith CLI and intends to be as similar
-to its structure and terminology as possible.
+This action now supports both the Cloudsmith CLI and the new Cloudsmith executable. The Cloudsmith executable allows you to use Cloudsmith without needing to install it via pip, making it easier to integrate into your workflows.
+
+From v0.6.9, we default the action to use the executable instead of having to install python, if you wish to use the old workflow, you can do so by specifying `executable: "false"`. This will attempt to download python and use pip to install the Cloudsmith-cli instead.
+
+```yaml
+...
+      - name: Push
+        id: push
+        uses: cloudsmith-io/action@master
+        with:
+          api-key: ${{ secrets.CLOUDSMITH_API_KEY }}
+          command: "push"
+          format: "maven"
+          owner: "cloudsmith"
+          repo: "actions"
+          republish: "true"
+          file: "test/fixture/cloudsmith-maven-example-1.0.0.jar"
+          executable: "false" # Add this to use pip instead
+```
 
 **Supported:**
 
