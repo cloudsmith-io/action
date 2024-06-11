@@ -101,17 +101,17 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
-    - name: Install cloudsmith-cli and cloudsmith-api ...
-      if: inputs.skip-install-cli == 'false'
-      shell: bash
-      run: |
-        pip install \
-        cloudsmith-api${{ inputs.api-version != 'none' && format('=={0}', inputs.api-version) || ''}} \
-        cloudsmith-cli${{ inputs.cli-version != 'none' && format('=={0}', inputs.cli-version) || ''}} \
+    # - name: Setup Python
+    #   uses: actions/setup-python@v5
+    #   with:
+    #     python-version: '3.x'
+    # - name: Install cloudsmith-cli and cloudsmith-api ...
+    #   if: inputs.skip-install-cli == 'false'
+    #   shell: bash
+    #   run: |
+    #     pip install \
+    #     cloudsmith-api${{ inputs.api-version != 'none' && format('=={0}', inputs.api-version) || ''}} \
+    #     cloudsmith-cli${{ inputs.cli-version != 'none' && format('=={0}', inputs.cli-version) || ''}} \
     - name: Run Entrypoint
       shell: bash
       run: |

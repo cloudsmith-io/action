@@ -191,7 +191,7 @@ function execute_push {
     extra="${options["extra"]}"
   }
 
-  local request="cloudsmith push ${options["action"]} ${options["format"]} $context ${options["file"]} $params $extra $tags"
+  local request="./cloudsmith-test push ${options["action"]} ${options["format"]} $context ${options["file"]} $params $extra $tags"
   echo $request
   eval $request
 }
