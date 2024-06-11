@@ -98,23 +98,29 @@ inputs:
     description: "The tags for the package, comma seperated"
     required: false
     default: none
+  use-executable:
+    description: "All: If true, the pre-packaged executable will be used instead of Python install and pip install."
+    required: false
+    default: "true"
 runs:
   using: "composite"
   steps:
-    # - name: Setup Python
-    #   uses: actions/setup-python@v5
-    #   with:
-    #     python-version: '3.x'
-    # - name: Install cloudsmith-cli and cloudsmith-api ...
-    #   if: inputs.skip-install-cli == 'false'
-    #   shell: bash
-    #   run: |
-    #     pip install \
-    #     cloudsmith-api${{ inputs.api-version != 'none' && format('=={0}', inputs.api-version) || ''}} \
-    #     cloudsmith-cli${{ inputs.cli-version != 'none' && format('=={0}', inputs.cli-version) || ''}} \
+    - name: Setup Python
+      if: inputs.use-executable == 'false'
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Install cloudsmith-cli and cloudsmith-api ...
+      if: inputs.skip-install-cli == 'false' && inputs.use-executable == 'false'
+      shell: bash
+      run: |
+        pip install \
+        cloudsmith-api${{ inputs.api-version != 'none' && format('=={0}', inputs.api-version) || ''}} \
+        cloudsmith-cli${{ inputs.cli-version != 'none' && format('=={0}', inputs.cli-version) || ''}} \
     - name: Run Entrypoint
       shell: bash
       env:
+        USE_EXECUTABLE: ${{ inputs.use-executable }}
         GITHUB_ACTION_PATH: ${{ github.action_path }}
       run: |
         bash ${{ github.action_path }}/entrypoint.sh \
