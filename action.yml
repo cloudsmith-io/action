@@ -112,7 +112,7 @@ runs:
       if: inputs.use-executable == 'true'
       shell: bash
       run: |
-        download_url=$(curl --silent "https://api.github.com/repos/BartoszBlizniak/cloudsmith-cli/releases/latest" | jq -r '.assets[0].browser_download_url')
+        download_url=$(curl --silent "https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest" | jq -r '.assets[0].browser_download_url')
         wget -O ${{ github.action_path }}/cloudsmith $download_url
         chmod +x ${{ github.action_path }}/cloudsmith
     - name: Setup Python
