@@ -105,6 +105,17 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Install jq
+      if: inputs.use-executable == 'true'
+      uses: dcarbone/install-jq-action@v2.1.0
+    - name: Download latest cloudsmith-cli executable
+      if: inputs.use-executable == 'true'
+      shell: bash
+      run: |
+        download_url=$(curl --silent "https://api.github.com/repos/BartoszBlizniak/cloudsmith-cli/releases/latest" | jq -r '.assets[0].browser_download_url')
+        wget $download_url
+        filename=$(basename $download_url)
+        chmod +x $filename
     - name: Setup Python
       if: inputs.use-executable == 'false'
       uses: actions/setup-python@v5
