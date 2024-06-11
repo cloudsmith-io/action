@@ -114,6 +114,8 @@ runs:
     #     cloudsmith-cli${{ inputs.cli-version != 'none' && format('=={0}', inputs.cli-version) || ''}} \
     - name: Run Entrypoint
       shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
       run: |
         bash ${{ github.action_path }}/entrypoint.sh \
         -k ${{ inputs.api-key }} \
