@@ -6,7 +6,7 @@ Push packages easily to your [Cloudsmith](https://cloudsmith.com) repositories, 
 
 This action now supports both the Cloudsmith CLI and the new Cloudsmith executable. The Cloudsmith executable allows you to use Cloudsmith without needing to install it via pip, making it easier to integrate into your workflows.
 
-To use executable, simply add `executable: true` to your workflow, example:
+From v0.6.9, we default the action to use the executable instead of having to install python, if you wish to use the old workflow, you can do so by specifying `executable: "false"`. This will attempt to download python and use pip to install the Cloudsmith-cli instead.
 
 ```yaml
 ...
@@ -21,7 +21,7 @@ To use executable, simply add `executable: true` to your workflow, example:
           repo: "actions"
           republish: "true"
           file: "test/fixture/cloudsmith-maven-example-1.0.0.jar"
-          executable: true # Add this to use executable instead
+          executable: "false" # Add this to use pip instead
 ```
 
 **Supported:**

@@ -101,7 +101,7 @@ inputs:
   use-executable:
     description: "All: If true, the pre-packaged executable will be used instead of Python install and pip install."
     required: false
-    default: "false"
+    default: "true"
 runs:
   using: "composite"
   steps:
