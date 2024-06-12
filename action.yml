@@ -113,8 +113,8 @@ runs:
       shell: bash
       run: |
         download_url=$(curl --silent "https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest" | jq -r '.assets[0].browser_download_url')
-        wget -O ${{ github.action_path }}/cloudsmith $download_url
-        chmod +x ${{ github.action_path }}/cloudsmith
+        sudo wget -O /usr/local/bin/cloudsmith $download_url
+        sudo chmod +x /usr/local/bin/cloudsmith
     - name: Setup Python
       if: inputs.use-executable == 'false'
       uses: actions/setup-python@v5
