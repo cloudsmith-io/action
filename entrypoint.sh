@@ -191,11 +191,7 @@ function execute_push {
     extra="${options["extra"]}"
   }
 
-  local executable="cloudsmith"
-  if [ "$USE_EXECUTABLE" = "true" ]; then
-    executable="${GITHUB_ACTION_PATH}/cloudsmith"
-  fi
-  local request="$executable push ${options["action"]} ${options["format"]} $context ${options["file"]} $params $extra $tags"
+  local request="cloudsmith push ${options["action"]} ${options["format"]} $context ${options["file"]} $params $extra $tags"
   echo $request
   eval $request
 }
