@@ -25,6 +25,6 @@ jobs:
           format: "maven"
           owner: "cloudsmith"
           repo: "actions"
-          pom-file: "test/fixture/cloudsmith-maven-example.pom"
+          pom-file: "test/fixture/cloudsmith-maven-example-1.0-SNAPSHOT.pom"
           republish: "true" # needed ONLY if version is not changing
           file: "test/fixture/cloudsmith-maven-example-1.0-SNAPSHOT.jar" #real file that will repeat versions
