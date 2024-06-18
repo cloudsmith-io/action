@@ -131,9 +131,18 @@ runs:
       shell: bash
       env:
         USE_EXECUTABLE: ${{ inputs.use-executable }}
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
       run: |
-        bash ${{ github.action_path }}/entrypoint.sh \
+        if [ -f "${{ github.action_path }}/entrypoint.sh" ]; then
+          ENTRYPOINT_PATH="${{ github.action_path }}/entrypoint.sh"
+          echo "Using entrypoint.sh from ${{ github.action_path }}"
+        elif [ -f "${GITHUB_ACTION_PATH}/entrypoint.sh" ]; then
+          ENTRYPOINT_PATH="${GITHUB_ACTION_PATH}/entrypoint.sh"
+          echo "Using entrypoint.sh from ${GITHUB_ACTION_PATH}"
+        else
+          echo "entrypoint.sh not found in either ${{ github.action_path }} or ${GITHUB_ACTION_PATH}"
+          exit 1
+        fi
+        bash $ENTRYPOINT_PATH \
         -k ${{ inputs.api-key }} \
         -K ${{ inputs.command }} \
         -f ${{ inputs.format }} \
