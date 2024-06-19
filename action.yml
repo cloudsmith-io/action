@@ -105,22 +105,32 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
     - name: Download latest cloudsmith-cli executable
       if: inputs.use-executable == 'true'
       shell: bash
       run: |
-        if command -v sed &> /dev/null; then
-          download_url=$(curl --silent "https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest" | sed -n 's/.*"browser_download_url": "\([^"]*\)".*/\1/p' | head -1)
-        else
-          download_url=$(curl --silent "https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest" | awk '/"browser_download_url":/ {print $2}' | tr -d '"' | head -1)
-        fi
-        sudo wget -O /usr/local/bin/cloudsmith $download_url
-        sudo chmod +x /usr/local/bin/cloudsmith
-    - name: Setup Python
-      if: inputs.use-executable == 'false'
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
+        python << EOF
+        import json, urllib.request, os
+
+        # Use GITHUB_WORKSPACE to ensure compatibility across all operating systems
+        executable_dir = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'bin')
+        os.makedirs(executable_dir, exist_ok=True)
+        local_path = os.path.join(executable_dir, 'cloudsmith')
+
+        with urllib.request.urlopen('https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest') as response:
+            data = json.loads(response.read().decode())
+            download_url = next((asset['browser_download_url'] for asset in data.get('assets', []) if 'browser_download_url' in asset), None)
+            if download_url:
+                with urllib.request.urlopen(download_url) as download_response, open(local_path, 'wb') as out_file:
+                    out_file.write(download_response.read())
+                os.chmod(local_path, os.stat(local_path).st_mode | 0o755)
+        EOF
+        # Add the directory to GITHUB_PATH
+        echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
     - name: Install cloudsmith-cli and cloudsmith-api ...
       if: inputs.skip-install-cli == 'false' && inputs.use-executable == 'false'
       shell: bash
