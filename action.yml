@@ -105,14 +105,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install jq
-      if: inputs.use-executable == 'true'
-      uses: dcarbone/install-jq-action@v2.1.0
     - name: Download latest cloudsmith-cli executable
       if: inputs.use-executable == 'true'
       shell: bash
       run: |
-        download_url=$(curl --silent "https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest" | jq -r '.assets[0].browser_download_url')
+        if command -v sed &> /dev/null; then
+          download_url=$(curl --silent "https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest" | sed -n 's/.*"browser_download_url": "\([^"]*\)".*/\1/p' | head -1)
+        else
+          download_url=$(curl --silent "https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest" | awk '/"browser_download_url":/ {print $2}' | tr -d '"' | head -1)
+        fi
         sudo wget -O /usr/local/bin/cloudsmith $download_url
         sudo chmod +x /usr/local/bin/cloudsmith
     - name: Setup Python
