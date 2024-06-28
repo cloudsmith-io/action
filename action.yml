@@ -109,6 +109,12 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
+    # Upgrade Bash on macOS - this is required as the default version of Bash on macOS runner is 3.9
+    - name: Upgrade Bash on macOS 
+      if: runner.os == 'macOS'
+      run: |
+        brew install bash
+      shell: bash
     - name: Download latest cloudsmith-cli executable
       if: inputs.use-executable == 'true'
       shell: bash
