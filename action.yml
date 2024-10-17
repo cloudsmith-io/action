@@ -115,28 +115,57 @@ runs:
       run: |
         brew install bash
       shell: bash
-    - name: Download latest cloudsmith-cli executable
+    - name: Download Cloudsmith CLI zipapp
       if: inputs.use-executable == 'true'
       shell: bash
       run: |
         python << EOF
-        import json, urllib.request, os
+        import os
+        import urllib.request
+        import sys
+
+        BASE_URL = 'https://dl.cloudsmith.io/public'
+        NAMESPACE = 'cloudsmith'
+        REPO_NAME = 'cli-zipapp'
 
         # Use GITHUB_WORKSPACE to ensure compatibility across all operating systems
         executable_dir = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'bin')
         os.makedirs(executable_dir, exist_ok=True)
-        local_path = os.path.join(executable_dir, 'cloudsmith')
+        EXECUTABLE_PATH = os.path.join(executable_dir, 'cloudsmith')
 
-        with urllib.request.urlopen('https://api.github.com/repos/cloudsmith-io/cloudsmith-cli/releases/latest') as response:
-            data = json.loads(response.read().decode())
-            download_url = next((asset['browser_download_url'] for asset in data.get('assets', []) if 'browser_download_url' in asset), None)
-            if download_url:
-                with urllib.request.urlopen(download_url) as download_response, open(local_path, 'wb') as out_file:
-                    out_file.write(download_response.read())
-                os.chmod(local_path, os.stat(local_path).st_mode | 0o755)
-        EOF
+        def download_file(url, path):
+            with urllib.request.urlopen(url) as response, open(path, 'wb') as out_file:
+                out_file.write(response.read())
+            os.chmod(path, os.stat(path).st_mode | 0o755)
+
+        def download_latest_release():
+            try:
+                download_url = f"{BASE_URL}/{NAMESPACE}/{REPO_NAME}/raw/names/cloudsmith-cli/versions/latest/cloudsmith.pyz"
+                download_file(download_url, EXECUTABLE_PATH)
+                print(f"Downloaded latest Cloudsmith CLI to {EXECUTABLE_PATH}")
+            except Exception as error:
+                print(f"Failed to download the latest release: {str(error)}")
+                sys.exit(1)
+
+        def download_specific_release(version):
+            try:
+                download_url = f"{BASE_URL}/{NAMESPACE}/{REPO_NAME}/raw/names/cloudsmith-cli/versions/{version}/cloudsmith.pyz"
+                download_file(download_url, EXECUTABLE_PATH)
+                print(f"Downloaded Cloudsmith CLI version {version} to {EXECUTABLE_PATH}")
+            except Exception as error:
+                print(f"Failed to download the specific release: {str(error)}")
+                sys.exit(1)
+
+        cli_version = '${{ inputs.cli-version }}'
+        if cli_version and cli_version.lower() != 'none':
+            download_specific_release(cli_version)
+        else:
+            download_latest_release()
+
         # Add the directory to GITHUB_PATH
-        echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
+        with open(os.environ['GITHUB_PATH'], 'a') as github_path:
+            github_path.write(f"{executable_dir}\n")
+        EOF
     - name: Install cloudsmith-cli and cloudsmith-api ...
       if: inputs.skip-install-cli == 'false' && inputs.use-executable == 'false'
       shell: bash
