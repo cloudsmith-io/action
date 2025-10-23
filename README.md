@@ -1,3 +1,10 @@
+# ⚠️ Repository Archived
+
+This repository is archived and no longer maintained. Please use our new supported Cloudsmith GitHub Action instead:
+https://github.com/cloudsmith-io/cloudsmith-cli-action
+
+---
+
 # Cloudsmith Push Action
 
 Push packages easily to your [Cloudsmith](https://cloudsmith.com) repositories, using the [Cloudsmith CLI](https://pypi.org/project/cloudsmith-cli/).
